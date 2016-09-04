@@ -3,6 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var promptDel = require('..');
 var dirExistsSync = require('@justinc/dir-exists').dirExistsSync;
+var touch = require('touch');
 
 const fixturesPath = path.join(__dirname, 'fixtures');
 const dir1 = path.join(fixturesPath, 'dir1');
@@ -15,6 +16,7 @@ function mkdirIfNotExists(dirPath) {
 }
 mkdirIfNotExists(dir1);
 mkdirIfNotExists(dir2);
+touch.sync(path.join(dir1, '.hiddenFile'));
 
 var promptDelPromise = promptDel({
   patterns: [path.join(__dirname, 'fixtures', '**'), '!' + path.join(__dirname, 'fixtures'), path.join(__dirname, 'does_not_exist', '**')]

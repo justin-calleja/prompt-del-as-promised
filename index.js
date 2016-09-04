@@ -6,6 +6,7 @@ var inquirer = require('inquirer');
  * @typedef {Object} Args
  * @property {[string]} patterns      - Mandatory argument: array of patterns to base deletion on
  * @property {string} promptMsg       - Optional argument for the string to use to prompt the user with before deletion
+ * @property {Object} delOpts         - Optional options for [del](https://www.npmjs.com/package/del). Default: { force: true, dot: true }
  * @property {promptCb} promptCb      - Optional promise-based callback argument responsible for getting approval from user
  */
 
@@ -45,17 +46,18 @@ function confirmFileDeletion(promptMsg) {
  */
 module.exports = function _promptDel(args) {
   return new Promise((resolve, reject) => {
-    
+
     if (!args || !args.patterns) {
       return reject(new Error('the patterns ([string]) to delete by are mandatory'));
     }
     const DEL_PATTERNS = args.patterns;
     const PROMPT_MSG = args.promptMsg || `About to delete based on the following patterns:\n${DEL_PATTERNS}`;
+    const DEL_OPTS = args.delOpts || { force: true, dot: true };
     const PROMPT = args.promptCb ? args.promptCb : confirmFileDeletion;
 
     PROMPT(PROMPT_MSG).then(answers => {
       if (answers.okDelete) {
-        del(DEL_PATTERNS, { force: true }).then(paths => {
+        del(DEL_PATTERNS, DEL_OPTS).then(paths => {
           resolve({ okDelete: true, deletedPaths: paths });
         }).catch(reject);
       } else {

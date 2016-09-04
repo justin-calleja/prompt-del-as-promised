@@ -26,6 +26,7 @@
     "@justinc/eslint-config-base": "^1.0.0",
     "chai": "^3.5.0",
     "eslint": "^2.8.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "touch": "^1.0.0"
   }
 }
