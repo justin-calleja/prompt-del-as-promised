@@ -9,7 +9,14 @@
   "keywords": [],
   "author": "Justin Calleja <calleja.justin@gmail.com>",
   "license": "ISC",
-  "homepage": "https://github.com/justin-calleja/prompt-del-dir#readme",
+  "homepage": "https://github.com/justin-calleja/prompt-del-as-promised#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justin-calleja/prompt-del-as-promised.git"
+  },
+  "bugs": {
+    "url": "https://github.com/justin-calleja/prompt-del-as-promised/issues"
+  },
   "dependencies": {
     "del": "^2.2.1",
     "inquirer": "^1.1.2"
