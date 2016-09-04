@@ -1,5 +1,4 @@
-// Just a quick way to try out inquirer's prompt
-
+var repl = require('repl');
 var fs = require('fs');
 var path = require('path');
 var promptDel = require('..');
@@ -17,9 +16,21 @@ function mkdirIfNotExists(dirPath) {
 mkdirIfNotExists(dir1);
 mkdirIfNotExists(dir2);
 
-promptDel({
+var promptDelPromise = promptDel({
   patterns: [path.join(__dirname, 'fixtures', '**'), '!' + path.join(__dirname, 'fixtures'), path.join(__dirname, 'does_not_exist', '**')]
 }).then(({ okDelete, deletedPaths }) => {
   console.log('okDelete:', okDelete);
   console.log('deletedPaths:', deletedPaths);
+  return `You chose ${okDelete ? 'to' : 'not to'} delete`;
+});
+
+promptDelPromise.then(promptDelResult => {
+  console.log('\npromptDelResult:', promptDelResult);
+  var replServer = repl.start({
+    prompt: 'Use \'.exit\' to exit > '
+  });
+
+  replServer.context.promptDel = promptDel;
+  replServer.context.promptDelPromise = promptDelPromise;
+  replServer.context.promptDelResult = promptDelResult;
 });
